@@ -4,8 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "admit-animal": "node cmd/post.js",
+    "get-animal": "node cmd/get.js",
+    "deploy-post": "npm run build-post; npm run zip-post; npm run save-lambda-post",
+    "build-post": "esbuild ./rest/post --platform=node --sourcemap --bundle --outfile=build/post/index.js",
+    "zip-post": "cd build/post; zip ../post.zip index.js",
+    "save-lambda-post": "aws lambda update-function-code --function-name fnAnimalShelter2 --zip-file fileb://build/post.zip --profile codefellow",
+    "deploy-get": "npm run build-get; npm run zip-get; npm run save-lambda-get",
+    "build-get": "esbuild ./rest/get --platform=node --sourcemap --bundle --outfile=build/get/index.js",
+    "zip-get": "cd build/get; zip ../get.zip index.js",
+    "save-lambda-get": "aws lambda update-function-code --function-name fnAnimalShelterGet --zip-file fileb://build/get.zip --profile codefellow",
+    "deploy-getIndex": "npm run build-getIndex; npm run zip-getIndex; npm run save-lambda-getIndex",
+    "build-getIndex": "esbuild ./rest/getIndex --platform=node --sourcemap --bundle --outfile=build/getIndex/index.js",
+    "zip-getIndex": "cd build/getIndex; zip ../getIndex.zip index.js",
+    "save-lambda-getIndex": "aws lambda update-function-code --function-name fnAnimalShelterGetIndex --zip-file fileb://build/getIndex.zip --profile codefellow",
+    "deploy-delete": "npm run build-delete; npm run zip-delete; npm run save-lambda-delete",
+    "build-delete": "esbuild ./rest/delete --platform=node --sourcemap --bundle --outfile=build/delete/index.js",
+    "zip-delete": "cd build/delete; zip ../delete.zip index.js",
+    "save-lambda-delete": "aws lambda update-function-code --function-name fnAnimalShelterDelete --zip-file fileb://build/delete.zip --profile codefellow",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "dynamoose": "^3.1.0",
+    "esbuild": "^0.15.11",
+    "uuid": "^9.0.0"
+  }
 }
